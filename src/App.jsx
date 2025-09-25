@@ -1,14 +1,21 @@
 
 import Squad from "./components/Squad";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
+import ResearchForm from "./components/ResearchForm";
+import { useTeamSearch } from "./hooks/useTeamSearch";
+
 export default function App({darkMode, setDarkMode }) {
+  const { setTeamName, team, players, loading, error } = useTeamSearch();
+
+
+/*
   const players = [
     { name: "Luca Bianchi", role: "Attaccante", number: 9 },
     { name: "Marco Rossi", role: "Centrocampista", number: 8 },
     { name: "Davide Verdi", role: "Difensore", number: 5 },
     { name: "Giovanni Neri", role: "Portiere", number: 1 },
     { name: "Demba Seck", role: "Portiere", number: 1 },
-  ];
+  ]; */
   const vociMenu = [
     {title: "Home", dest: "#"},
     {title: "Squadre", dest: "#"},
@@ -17,8 +24,6 @@ export default function App({darkMode, setDarkMode }) {
 
   return (
     <div className={`min-h-screen flex flex-col ${darkMode ? 'bg-gray-900 text-white' : 'bg-green-50 text-black'}`}>
-
-
 
       {/* header */}
 
@@ -40,20 +45,16 @@ export default function App({darkMode, setDarkMode }) {
       */}
       
       {/* Hero */}
-      <section className={`relative text-center py-20 ${darkMode ? 'bg-clay-900 text-grey' : 'bg-green-800 text-black'}`}>
-        <h2 className="text-4xl font-bold mb-4">Benvenuto nel nostro club</h2>
-        <p className="mb-6 text-lg">Scopri la nostra passione per il calcio</p>
-        <button className="bg-yellow-400 text-black px-6 py-2 rounded-full font-semibold hover:bg-yellow-300">
-          Scopri di più
-        </button>
-      </section>
+      <ResearchForm darkMode = {darkMode} onSearch={setTeamName}/>
 
       {/* Squadra */}
       <Squad players = { players } darkMode = {darkMode} />
 
       {/* Footer */}
-      <footer className="bg-green-800 text-white py-4 text-center">
-        <p>© 2025 Calcio Club. Tutti i diritti riservati.</p>
+{/*      <footer className="bg-green-800 text-white py-4 text-center"> */}
+      <footer className={`py-4 text-center ${darkMode ? 'bg-black-800 text-grey' : 'bg-green-800 text-white'}`}>
+
+        <p>Il Mio Calcio. Progetto realizzato da Lorenzo.</p>
       </footer>
     </div>
   );
