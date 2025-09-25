@@ -1,7 +1,7 @@
 
 import Squad from "./components/Squad";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
-export default function App() {
+export default function App({darkMode, setDarkMode }) {
   const players = [
     { name: "Luca Bianchi", role: "Attaccante", number: 9 },
     { name: "Marco Rossi", role: "Centrocampista", number: 8 },
@@ -16,12 +16,17 @@ export default function App() {
   ]
 
   return (
-    <div className="min-h-screen flex flex-col bg-green-50">
+    <div className={`min-h-screen flex flex-col ${darkMode ? 'bg-gray-900 text-white' : 'bg-green-50 text-black'}`}>
+
 
 
       {/* header */}
 
-      <ResponsiveAppBar vociMenu = { vociMenu }/>
+      <ResponsiveAppBar 
+        vociMenu = { vociMenu }
+        darkMode = { darkMode }
+        setDarkMode = { setDarkMode }
+        />
       {/*
       <header className="bg-green-700 text-white p-4 flex justify-between items-center shadow-lg">
         <h1 className="text-2xl font-bold">⚽ Il Mio Calcio</h1>
@@ -35,7 +40,7 @@ export default function App() {
       */}
       
       {/* Hero */}
-      <section className="relative bg-green-900 text-white text-center py-20">
+      <section className={`relative text-center py-20 ${darkMode ? 'bg-clay-900 text-grey' : 'bg-green-800 text-black'}`}>
         <h2 className="text-4xl font-bold mb-4">Benvenuto nel nostro club</h2>
         <p className="mb-6 text-lg">Scopri la nostra passione per il calcio</p>
         <button className="bg-yellow-400 text-black px-6 py-2 rounded-full font-semibold hover:bg-yellow-300">
@@ -44,7 +49,7 @@ export default function App() {
       </section>
 
       {/* Squadra */}
-      <Squad players = { players } />
+      <Squad players = { players } darkMode = {darkMode} />
 
       {/* Footer */}
       <footer className="bg-green-800 text-white py-4 text-center">

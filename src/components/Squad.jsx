@@ -1,6 +1,6 @@
 import PlayerCard from "./PlayerCard";
 
-export default function Squad({ players }) {
+export default function Squad({ players, darkMode }) {
   return (
     <section className="flex-1 py-10 px-6">
       <h3 className="text-3xl font-bold text-center mb-8">La Nostra Squadra</h3>
@@ -11,6 +11,7 @@ export default function Squad({ players }) {
             number={player.number}
             name={player.name}
             role={player.role}
+            darkMode={darkMode}
           />
         ))}
       </div>

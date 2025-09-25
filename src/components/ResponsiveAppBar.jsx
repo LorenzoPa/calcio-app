@@ -12,11 +12,12 @@ import Button from '@mui/material/Button';
 import Tooltip from '@mui/material/Tooltip';
 import MenuItem from '@mui/material/MenuItem';
 import AdbIcon from '@mui/icons-material/Adb';
+import { Switch } from '@mui/material';
 
 
 const settings = ['Profile', 'Account', 'Dashboard', 'Logout'];
 
-function ResponsiveAppBar({vociMenu}) {
+function ResponsiveAppBar({vociMenu, darkMode, setDarkMode}) {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
   const pages = vociMenu;
@@ -36,7 +37,7 @@ function ResponsiveAppBar({vociMenu}) {
   };
 
   return (
-    <AppBar position="static">
+    <AppBar position="static" sx={{background: "primary.main"}}>
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           <AdbIcon sx={{ display: { xs: 'none', md: 'flex' }, mr: 1 }} />
@@ -122,6 +123,13 @@ function ResponsiveAppBar({vociMenu}) {
               </Button>
             ))}
           </Box>
+
+
+          <Switch
+            checked={darkMode}
+            onChange = {() => setDarkMode(!darkMode)}
+            color="default"
+          />
           <Box sx={{ flexGrow: 0 }}>
             <Tooltip title="Open settings">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
