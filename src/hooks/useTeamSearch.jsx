@@ -1,74 +1,76 @@
 import { useState, useEffect } from "react";
+import teamsData from "../data/teams.json"; // 1. Importa i dati delle squadre
 
 const apiKey = import.meta.env.VITE_FOOTBALL_API_KEY;
 const apiHost = import.meta.env.VITE_FOOTBALL_API_HOST;
 const apiUrl = "https://v3.football.api-sports.io";
 
-
-export function useTeamSearch(value) {
+export function useTeamSearch(searchValue, cache, addToCache) {
   const [team, setTeam] = useState(null);
   const [players, setPlayers] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
-  const [teamName, setTeamName] = useState("");
+
   useEffect(() => {
-    if (!value || value.length < 3) return; // search richiede almeno 3 caratteri
+    if (!searchValue || searchValue.length < 3) {
+      setTeam(null);
+      setPlayers([]);
+      return;
+    }
 
     const fetchData = async () => {
       setLoading(true);
       setError("");
-      setTeam(null);
-      setPlayers([]);
-      setTeamName("");
-      const headers = new Headers();
-      headers.append("x-rapidapi-key", apiKey);
-      headers.append("x-rapidapi-host", apiHost);
 
-      const requestOptions = {
-        method: "GET",
-        headers,
-        redirect: "follow",
-      };
+      const cacheKey = searchValue.toLowerCase();
+      if (cache[cacheKey]) {
+        setTeam(cache[cacheKey].team);
+        setPlayers(cache[cacheKey].players);
+        setLoading(false);
+        return;
+      }
 
       try {
-        // Fetch squadra
-        const teamResp = await fetch(
-          `${apiUrl}/teams?search=${encodeURIComponent(value)}`,
-          requestOptions
+        // 2. Trova la squadra nel file JSON importato
+        const teamInfo = teamsData.response.find(
+          (item) => item.team.name.toLowerCase() === cacheKey
         );
-        const teamData = await teamResp.json();
 
-        if (!teamData.response || teamData.response.length === 0) {
-          setError("Squadra non trovata");
-          setLoading(false);
-          return;
+        if (!teamInfo) {
+          throw new Error("Squadra non trovata.");
         }
 
-        const foundTeam = teamData.response[0].team;
-        const teamName = teamData.response[0].name;
-        setTeam(foundTeam);
-        setTeamName(teamName);
-        // Fetch giocatori
+        const teamId = teamInfo.team.id;
+        const foundTeam = teamInfo.team;
+
+        // 3. Usa l'ID trovato per fare la chiamata API per i giocatori
+        const headers = new Headers();
+        headers.append("x-rapidapi-key", apiKey);
+        headers.append("x-rapidapi-host", apiHost);
+        const requestOptions = { method: "GET", headers, redirect: "follow" };
+
         const playersResp = await fetch(
-          `${apiUrl}/players/squads?team=${foundTeam.id}`,
+          `${apiUrl}/players/squads?team=${teamId}`,
           requestOptions
-        );
+        )
         const playersData = await playersResp.json();
+        const foundPlayers = playersData.response[0]?.players || [];
+        console.log('Ho fatto una chiamata API a: ',teamInfo.team.name)
+        setTeam(foundTeam);
+        setPlayers(foundPlayers);
+        addToCache(cacheKey, { team: foundTeam, players: foundPlayers });
 
-        if (playersData.response && playersData.response[0]?.players) {
-          setPlayers(playersData.response[0].players);
-        } else {
-          setPlayers([]);
-        }
       } catch (err) {
         setError(err.message);
+        setTeam(null);
+        setPlayers([]);
       } finally {
         setLoading(false);
       }
     };
 
     fetchData();
-  }, [value]);
-  console.log(JSON.stringify(players))
-  return { team, players, teamName, loading, error };
+  }, [searchValue, cache, addToCache]);
+
+  return { team, players, loading, error };
 }

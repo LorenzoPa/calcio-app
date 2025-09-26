@@ -1,7 +1,7 @@
 import React from "react";
 import { Card, CardContent, Avatar, Typography, Box } from "@mui/material";
 
-export default function PlayerCard({ number, name, role }) {
+export default function PlayerCard({ number, name, role, photo }) {
   return (
     <Card
       sx={{
@@ -22,9 +22,12 @@ export default function PlayerCard({ number, name, role }) {
       <CardContent>
         <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
           <Avatar
-            sx={{ width: 80, height: 80, bgcolor: "primary.main", fontSize: 24, fontWeight: "bold" }}
+            src={photo}
+            alt={name}
+            sx={{ width: 80, height: 80 }}
           >
-            {number}
+            {/* Fallback nel caso l'immagine non carichi */}
+            {name.charAt(0)}
           </Avatar>
         </Box>
         <Typography variant="h6" gutterBottom>{name}</Typography>
