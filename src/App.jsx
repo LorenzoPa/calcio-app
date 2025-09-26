@@ -1,61 +1,60 @@
-
+import React from "react";
+import { ThemeProvider, CssBaseline, Box, Container, Typography } from "@mui/material";
 import Squad from "./components/Squad";
 import ResponsiveAppBar from "./components/ResponsiveAppBar";
 import ResearchForm from "./components/ResearchForm";
 import { useTeamSearch } from "./hooks/useTeamSearch";
+import { lightTheme, darkTheme } from "./theme";
 
-export default function App({darkMode, setDarkMode }) {
-  const { setTeamName, team, players, loading, error } = useTeamSearch();
+export default function App({ darkMode, setDarkMode }) {
+  const { setTeamName, team, teamName, players, loading, error } = useTeamSearch();
 
-
-/*
-  const players = [
-    { name: "Luca Bianchi", role: "Attaccante", number: 9 },
-    { name: "Marco Rossi", role: "Centrocampista", number: 8 },
-    { name: "Davide Verdi", role: "Difensore", number: 5 },
-    { name: "Giovanni Neri", role: "Portiere", number: 1 },
-    { name: "Demba Seck", role: "Portiere", number: 1 },
-  ]; */
   const vociMenu = [
-    {title: "Home", dest: "#"},
-    {title: "Squadre", dest: "#"},
-    {title: "About", dest: "#"}
-  ]
+    { title: "Home", dest: "#" },
+    { title: "Squadre", dest: "#" },
+    { title: "About", dest: "#" },
+  ];
 
   return (
-    <div className={`min-h-screen flex flex-col ${darkMode ? 'bg-gray-900 text-white' : 'bg-green-50 text-black'}`}>
+    <ThemeProvider theme={darkMode ? darkTheme : lightTheme}>
+      <CssBaseline /> {/* Resetta gli stili globali e applica colori background/text */}
+      <Box
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          bgcolor: "background.default",
+          color: "text.primary",
+        }}
+      >
+        {/* Header */}
+        <ResponsiveAppBar vociMenu={vociMenu} darkMode={darkMode} setDarkMode={setDarkMode} />
 
-      {/* header */}
+        {/* Hero */}
+        <Container sx={{ mt: 4 }}>
+          <ResearchForm onSearch={setTeamName} />
+        </Container>
 
-      <ResponsiveAppBar 
-        vociMenu = { vociMenu }
-        darkMode = { darkMode }
-        setDarkMode = { setDarkMode }
-        />
-      {/*
-      <header className="bg-green-700 text-white p-4 flex justify-between items-center shadow-lg">
-        <h1 className="text-2xl font-bold">⚽ Il Mio Calcio</h1>
-        <nav className="space-x-4">
-          <a href="#" className="hover:text-yellow-300">Home</a>
-          <a href="#" className="hover:text-yellow-300">Squadra</a>
-          <a href="#" className="hover:text-yellow-300">Calendario</a>
-          <a href="#" className="hover:text-yellow-300">Contatti</a>
-        </nav>
-      </header>
-      */}
-      
-      {/* Hero */}
-      <ResearchForm darkMode = {darkMode} onSearch={setTeamName}/>
+        {/* Squadra */}
+        
+         
+          <Squad players={players} teamName={teamName} />
+        
 
-      {/* Squadra */}
-      <Squad players = { players } darkMode = {darkMode} />
-
-      {/* Footer */}
-{/*      <footer className="bg-green-800 text-white py-4 text-center"> */}
-      <footer className={`py-4 text-center ${darkMode ? 'bg-black-800 text-grey' : 'bg-green-800 text-white'}`}>
-
-        <p>Il Mio Calcio. Progetto realizzato da Lorenzo.</p>
-      </footer>
-    </div>
+        {/* Footer */}
+        <Box
+          component="footer"
+          sx={{
+            py: 4,
+            textAlign: "center",
+            bgcolor: "primary.main",
+            color: "primary.contrastText",
+            mt: "auto",
+          }}
+        >
+          <Typography>Il Mio Calcio. Progetto realizzato da Lorenzo.</Typography>
+        </Box>
+      </Box>
+    </ThemeProvider>
   );
 }

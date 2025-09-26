@@ -1,15 +1,35 @@
-export default function PlayerCard({ number, name, role, darkMode }) {
-  return (
-    <div className={`shadow-md rounded-xl p-4 text-center border transition
-  ${darkMode 
-    ? 'bg-gray-800 text-white border-gray-700 hover:shadow-lg' 
-    : 'bg-white text-black border-green-200 hover:shadow-lg'}`}>
+import React from "react";
+import { Card, CardContent, Avatar, Typography, Box } from "@mui/material";
 
-      <div className="w-20 h-20 mx-auto mb-4 bg-green-500 rounded-full flex items-center justify-center text-white text-2xl font-bold">
-        {number}
-      </div>
-      <h4 className="text-xl font-semibold">{name}</h4>
-      <p className="text-gray-600">{role}</p>
-    </div>
+export default function PlayerCard({ number, name, role }) {
+  return (
+    <Card
+      sx={{
+        height: "250px",
+        width: "200px",
+        textAlign: "center",
+        borderRadius: 3,
+        p: 2,
+        border: 1,
+        borderColor: "divider",
+        boxShadow: 3,
+        transition: "0.3s",
+        "&:hover": { boxShadow: 6 },
+        bgcolor: "background.paper",
+        color: "text.primary",
+      }}
+    >
+      <CardContent>
+        <Box sx={{ display: "flex", justifyContent: "center", mb: 2 }}>
+          <Avatar
+            sx={{ width: 80, height: 80, bgcolor: "primary.main", fontSize: 24, fontWeight: "bold" }}
+          >
+            {number}
+          </Avatar>
+        </Box>
+        <Typography variant="h6" gutterBottom>{name}</Typography>
+        <Typography variant="body2" color="text.secondary">{role}</Typography>
+      </CardContent>
+    </Card>
   );
 }
