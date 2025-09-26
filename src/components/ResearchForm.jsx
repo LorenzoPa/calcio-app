@@ -8,8 +8,8 @@ export default function ResearchForm({ onSearch, loading, teamNames,teamLogos}) 
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (value && value.trim()) {
-      onSearch(value.trim());
+    if (value && value.label.trim()) {
+      onSearch(value.label.trim());
     }
   };
 

@@ -27,7 +27,7 @@ export default function App() {
 
   // 2. Estrai solo i nomi delle squadre per l'autocomplete
   const teamNames = teamsData.response.map((item) => item.team.name);
-  const teamLogos = teamsData.response.map((item)=>item.team.logo);
+  const teamLogos = teamsData.response.map((item)=>({label:item.team.name, logo:item.team.logo, id: item.team.id}));
 
   const vociMenu = [
     { title: "Home", dest: "#" },
