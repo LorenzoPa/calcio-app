@@ -1,6 +1,8 @@
 import React from "react";
 import { Box, Grid, Typography } from "@mui/material";
 import PlayerCard from "./PlayerCard";
+import Fab from '@mui/material/Fab';
+import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 
 export default function Squad({ players, team }) {
   return (
@@ -25,8 +27,13 @@ export default function Squad({ players, team }) {
             style={{ height: "1em" }} // L'altezza si adatta alla dimensione del font
           />
           {team.name}
+          <Fab  aria-label="like">
+        <StarBorderOutlinedIcon />
+      </Fab>
         </Typography>
+        
       )}
+       
 
       <Grid container spacing={3} alignItems="stretch">
         {players.map((player, idx) => (

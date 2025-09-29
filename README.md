@@ -1,16 +1,79 @@
-# React + Vite
+# Calcio-App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+```text
+Una semplice web app in React + Vite per la ricerca di squadre di calcio tramite API.
+Il progetto è stato sviluppato come esercizio per imparare a lavorare con form controllati,
+gestione dello stato e rendering dinamico in React.
 
-Currently, two official plugins are available:
+---
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+📋 Caratteristiche principali
 
-## React Compiler
+- Ricerca di squadre di calcio inserendo il nome (anche parziale)
+- Filtraggio dei risultati in tempo reale mentre l’utente scrive
+- Interfaccia semplice e intuitiva
+- Gestione dello stato tramite React Hooks
+- Struttura pensata per apprendere i concetti base di React
 
-The React Compiler is not enabled on this template. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+---
 
-## Expanding the ESLint configuration
+🧰 Tecnologie usate
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+- React
+- Vite
+- JavaScript
+- API esterna per i dati delle squadre
+
+---
+
+🚀 Come avviare il progetto
+
+# 1. Clona il repository
+git clone https://github.com/LorenzoPa/calcio-app.git
+
+# 2. Entra nella cartella del progetto
+cd calcio-app
+
+# 3. Installa le dipendenze
+npm install
+
+# 4. Avvia l’app in modalità sviluppo
+npm run dev
+
+# 5. Apri il browser su http://localhost:5173
+
+---
+
+🔧 Struttura del progetto
+
+calcio-app/
+├── public/
+│   └── index.html
+├── src/
+│   ├── components/       # Componenti React (es. ricerca, lista risultati)
+│   ├── services/         # Chiamate API
+│   ├── App.jsx
+│   └── main.jsx
+├── package.json
+├── vite.config.js
+└── README.md
+
+---
+
+🎯 Possibili sviluppi futuri
+
+- Aggiungere loader/spinner durante le richieste
+- Gestione avanzata degli errori API
+- Paginazione dei risultati
+- Aggiungere dettagli extra delle squadre (logo, stadio, anno fondazione)
+- Migrazione a TypeScript
+- Aggiunta di test (unitari e integrazione)
+- Miglioramento UI/UX e responsive design
+- Caching dei risultati
+
+---
+
+📝 Note
+
+Questo progetto nasce come esercizio personale per approfondire l’uso di React e delle API.
+Contributi, suggerimenti e pull request sono sempre benvenuti! 🚀

@@ -15,7 +15,8 @@ import {
   useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-import AdbIcon from "@mui/icons-material/Adb";
+
+import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
@@ -37,7 +38,7 @@ function ResponsiveAppBar({ vociMenu, darkMode, setDarkMode }) {
       <Container maxWidth="xl">
         <Toolbar disableGutters>
           {/* Logo Desktop */}
-          <AdbIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
+          <SportsSoccerIcon sx={{ display: { xs: "none", md: "flex" }, mr: 1 }} />
           <Typography
             variant="h6"
             noWrap
@@ -84,7 +85,7 @@ function ResponsiveAppBar({ vociMenu, darkMode, setDarkMode }) {
           </Box>
 
           {/* Logo Mobile */}
-          <AdbIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
+          <SportsSoccerIcon sx={{ display: { xs: "flex", md: "none" }, mr: 1 }} />
           <Typography
             variant="h5"
             noWrap
