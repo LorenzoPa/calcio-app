@@ -1,6 +1,6 @@
 # Calcio-App
 
-```text
+
 Una semplice web app in React + Vite per la ricerca di squadre di calcio tramite API.
 Il progetto è stato sviluppato come esercizio per imparare a lavorare con form controllati,
 gestione dello stato e rendering dinamico in React.
@@ -62,13 +62,8 @@ calcio-app/
 
 🎯 Possibili sviluppi futuri
 
-- Aggiungere loader/spinner durante le richieste
-- Gestione avanzata degli errori API
 - Paginazione dei risultati
 - Aggiungere dettagli extra delle squadre (logo, stadio, anno fondazione)
-- Migrazione a TypeScript
-- Aggiunta di test (unitari e integrazione)
-- Miglioramento UI/UX e responsive design
 - Caching dei risultati
 
 ---
