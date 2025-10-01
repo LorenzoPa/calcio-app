@@ -18,13 +18,13 @@ import MenuIcon from "@mui/icons-material/Menu";
 
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 
-const settings = ["Profile", "Account", "Dashboard", "Logout"];
 
-function ResponsiveAppBar({ vociMenu, darkMode, setDarkMode }) {
+
+function ResponsiveAppBar({ inRegistration, setInRegistration, vociMenu, darkMode, setDarkMode, vociProfilo }) {
   const theme = useTheme(); // prendi il tema corrente
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-
+  const settings = vociProfilo;
   const pages = vociMenu;
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
@@ -142,7 +142,15 @@ function ResponsiveAppBar({ vociMenu, darkMode, setDarkMode }) {
               onClose={handleCloseUserMenu}
             >
               {settings.map((setting) => (
-                <MenuItem key={setting} onClick={handleCloseUserMenu}>
+                <MenuItem
+                  key={setting}
+                  onClick={() => {
+                    handleCloseUserMenu();
+                    if (setting === "Registrazione") {
+                      setInRegistration(true);
+                    }
+                  }}
+                >
                   <Typography textAlign="center">{setting}</Typography>
                 </MenuItem>
               ))}

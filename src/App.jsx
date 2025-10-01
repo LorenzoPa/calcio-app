@@ -6,12 +6,14 @@ import ResearchForm from "./components/ResearchForm";
 import { useTeamSearch } from "./hooks/useTeamSearch";
 import { lightTheme, darkTheme } from "./theme";
 import teamsData from "./data/teams.json"; // 1. Importa il file JSON con le squadre
+import Register from "./components/Register";
 
 export default function App() {
   const [darkMode, setDarkMode] = useState(true);
   const [searchValue, setSearchValue] = useState("");
   const [teamCache, setTeamCache] = useState({});
-
+  const [isLogged, setIsLogged] = useState(false)
+  const [inRegistration, setInRegistration] = useState(false)
   const addToCache = useCallback((key, data) => {
     setTeamCache((prevCache) => ({
       ...prevCache,
@@ -27,8 +29,19 @@ export default function App() {
 
   // 2. Estrai solo i nomi delle squadre per l'autocomplete
   const teamNames = teamsData.response.map((item) => item.team.name);
-  const teamLogos = teamsData.response.map((item)=>({label:item.team.name, logo:item.team.logo, id: item.team.id}));
-
+  const teamLogos = teamsData.response.map((item) => ({ label: item.team.name, logo: item.team.logo, id: item.team.id }));
+  let vociProfilo = []
+  if (isLogged) {
+    vociProfilo = [
+      "Profilo",
+      "Logout"
+    ]
+  } else {
+    vociProfilo = [
+      "Login",
+      "Registrazione"
+    ]
+  }
   const vociMenu = [
     { title: "Home", dest: "#" },
     { title: "Squadre", dest: "#" },
@@ -47,11 +60,28 @@ export default function App() {
           color: "text.primary",
         }}
       >
-        <ResponsiveAppBar vociMenu={vociMenu} darkMode={darkMode} setDarkMode={setDarkMode} />
+        <ResponsiveAppBar inRegistration= {inRegistration} setInRegistration={setInRegistration} vociMenu={vociMenu} darkMode={darkMode} setDarkMode={setDarkMode} vociProfilo={vociProfilo} />
 
         <Container sx={{ mt: 4, textAlign: "center" }}>
+          {inRegistration ? (
+    <Register onClose={() => setInRegistration(false)} />
+  ) : (
+    <>
+      <ResearchForm
+        onSearch={setSearchValue}
+        loading={loading}
+        teamNames={teamNames}
+        teamLogos={teamLogos}
+      />
+
+      {loading && <Typography sx={{ mt: 3 }}>Caricamento...</Typography>}
+      {error && (
+        <Typography sx={{ mt: 3, color: "error.main" }}>{error}</Typography>
+      )}
+    </>
+  )}
           {/* 3. Passa i nomi delle squadre al form */}
-          <ResearchForm onSearch={setSearchValue} loading={loading} teamNames={teamNames} teamLogos={teamLogos}/>
+          <ResearchForm onSearch={setSearchValue} loading={loading} teamNames={teamNames} teamLogos={teamLogos} />
 
           {loading && <Typography sx={{ mt: 3 }}>Caricamento...</Typography>}
           {error && <Typography sx={{ mt: 3, color: "error.main" }}>{error}</Typography>}
