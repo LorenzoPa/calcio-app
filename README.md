@@ -65,6 +65,7 @@ calcio-app/
 - Paginazione dei risultati
 - Aggiungere dettagli extra delle squadre (logo, stadio, anno fondazione)
 - Caching dei risultati
+- Registrazione/Login
 
 ---
 
