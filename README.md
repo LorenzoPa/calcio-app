@@ -31,9 +31,9 @@ Il progetto integra un **backend Django REST** per registrazione/login e salvata
 ## 🚀 Come avviare il progetto
 
 1. Clona il repository
-   ```
-   git clone https://github.com/LorenzoPa/calcio-app.git
-    ```
+```
+git clone https://github.com/LorenzoPa/calcio-app.git
+```
 Entra nella cartella del progetto
 
 bash
@@ -83,5 +83,4 @@ Deployment online (frontend + backend)
 Progetto nato come esercizio personale per approfondire l’uso di React, API REST e autenticazione con JWT.
 Contributi, suggerimenti e pull request sono sempre benvenuti! 🚀
 
-yaml
-Copia codice
+
