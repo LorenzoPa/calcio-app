@@ -36,9 +36,9 @@ git clone https://github.com/LorenzoPa/calcio-app.git
 ```
 Entra nella cartella del progetto
 
-bash
-Copia codice
+```
 cd calcio-app
+```
 Installa le dipendenze
 
 ```
