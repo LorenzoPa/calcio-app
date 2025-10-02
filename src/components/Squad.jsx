@@ -4,7 +4,37 @@ import PlayerCard from "./PlayerCard";
 import Fab from '@mui/material/Fab';
 import StarBorderOutlinedIcon from '@mui/icons-material/StarBorderOutlined';
 
-export default function Squad({ players, team }) {
+
+
+  
+export default function Squad({ players, team, isLogged, setUser }) {
+  const handleFavorite = async (team) => {
+  const token = localStorage.getItem("access");
+  try {
+    const res = await fetch("http://127.0.0.1:8000/auth/favorite/", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization" : `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        favorite_team: team.name
+      }),
+    });
+    if (res.ok){
+      console.log("Squadra salvata nei preferiti");
+      setUser((prev) => ({
+        ...prev,
+        favoriteTeamLogo: team.logo,
+      }));
+      
+    } else {
+      console.error("error nel salvataggio dei preferiti");
+    }
+  }catch(err){
+    console.error("Errore di rete: ", err);
+  }
+}
   return (
     <Box>
       {team && (
@@ -27,14 +57,13 @@ export default function Squad({ players, team }) {
             style={{ height: "1em" }} // L'altezza si adatta alla dimensione del font
           />
           {team.name}
-          <Fab  aria-label="like">
-        <StarBorderOutlinedIcon />
-      </Fab>
+          {isLogged && (
+            <Fab aria-label="like" onClick={() => handleFavorite(team)}>
+              <StarBorderOutlinedIcon />
+            </Fab>
+          )}
         </Typography>
-        
       )}
-       
-
       <Grid container spacing={3} alignItems="stretch">
         {players.map((player, idx) => (
           <Grid key={idx}>

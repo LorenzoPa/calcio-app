@@ -3,13 +3,15 @@ import { Button, Box } from "@mui/material";
 import BasicTextFields from "./BasicTextFields";
 
 // 1. Ricevi teamNames
-export default function ResearchForm({ onSearch, loading, teamNames,teamLogos}) {
+export default function ResearchForm({ onSearch, loading, teamNames,teamLogos, setCurrentPage}) {
   const [value, setValue] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (value && value.label.trim()) {
+      
       onSearch(value.label.trim());
+      setCurrentPage("squad")
     }
   };
 

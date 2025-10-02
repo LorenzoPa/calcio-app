@@ -15,17 +15,23 @@ import {
   useTheme,
 } from "@mui/material";
 import MenuIcon from "@mui/icons-material/Menu";
-
 import SportsSoccerIcon from '@mui/icons-material/SportsSoccer';
 
-
-
-function ResponsiveAppBar({ inRegistration, setInRegistration, vociMenu, darkMode, setDarkMode, vociProfilo }) {
-  const theme = useTheme(); // prendi il tema corrente
+function ResponsiveAppBar({
+  vociMenu,
+  darkMode,
+  setDarkMode,
+  vociProfilo,
+  setCurrentPage,
+  isLogged,
+  setIsLogged,
+  username,
+  favoriteTeamLogo,
+  setUser
+}) {
+  const theme = useTheme();
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const settings = vociProfilo;
-  const pages = vociMenu;
 
   const handleOpenNavMenu = (event) => setAnchorElNav(event.currentTarget);
   const handleCloseNavMenu = () => setAnchorElNav(null);
@@ -42,8 +48,7 @@ function ResponsiveAppBar({ inRegistration, setInRegistration, vociMenu, darkMod
           <Typography
             variant="h6"
             noWrap
-            component="a"
-            href="#"
+            component="div"
             sx={{
               mr: 2,
               display: { xs: "none", md: "flex" },
@@ -52,7 +57,9 @@ function ResponsiveAppBar({ inRegistration, setInRegistration, vociMenu, darkMod
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              cursor: "pointer"
             }}
+            onClick={() => setCurrentPage("home")}
           >
             CALCIO
           </Typography>
@@ -76,8 +83,14 @@ function ResponsiveAppBar({ inRegistration, setInRegistration, vociMenu, darkMod
               onClose={handleCloseNavMenu}
               sx={{ display: { xs: "block", md: "none" } }}
             >
-              {pages.map((page) => (
-                <MenuItem key={page.title} onClick={handleCloseNavMenu}>
+              {vociMenu.map((page) => (
+                <MenuItem
+                  key={page.title}
+                  onClick={() => {
+                    setCurrentPage(page.dest);
+                    handleCloseNavMenu();
+                  }}
+                >
                   <Typography textAlign="center">{page.title}</Typography>
                 </MenuItem>
               ))}
@@ -89,8 +102,7 @@ function ResponsiveAppBar({ inRegistration, setInRegistration, vociMenu, darkMod
           <Typography
             variant="h5"
             noWrap
-            component="a"
-            href="#"
+            component="div"
             sx={{
               mr: 2,
               display: { xs: "flex", md: "none" },
@@ -100,17 +112,19 @@ function ResponsiveAppBar({ inRegistration, setInRegistration, vociMenu, darkMod
               letterSpacing: ".3rem",
               color: "inherit",
               textDecoration: "none",
+              cursor: "pointer"
             }}
+            onClick={() => setCurrentPage("home")}
           >
             Il Mio Calcio
           </Typography>
 
           {/* Menu Desktop */}
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
+            {vociMenu.map((page) => (
               <Button
                 key={page.title}
-                onClick={handleCloseNavMenu}
+                onClick={() => setCurrentPage(page.dest)}
                 sx={{ my: 2, color: "inherit", display: "block" }}
               >
                 {page.title}
@@ -125,11 +139,24 @@ function ResponsiveAppBar({ inRegistration, setInRegistration, vociMenu, darkMod
             color="default"
           />
 
-          {/* Avatar / Menu Utente */}
-          <Box sx={{ flexGrow: 0 }}>
-            <Tooltip title="Open settings">
+          {/* Utente */}
+          <Box sx={{ flexGrow: 0, display: "flex", alignItems: "center", gap: 1 }}>
+            {isLogged && (
+              <Typography variant="body1" sx={{ mr: 1 }}>
+                {username}
+              </Typography>
+            )}
+            <Tooltip title="Apri impostazioni">
               <IconButton onClick={handleOpenUserMenu} sx={{ p: 0 }}>
-                <Avatar alt="User" src="/static/images/avatar/2.jpg" />
+                {isLogged ? (
+                  favoriteTeamLogo ? (
+                    <Avatar alt={username} src={favoriteTeamLogo} />
+                  ) : (
+                    <Avatar>{username?.charAt(0).toUpperCase()}</Avatar>
+                  )
+                ) : (
+                  <Avatar alt="User" src="/static/images/avatar/2.jpg" />
+                )}
               </IconButton>
             </Tooltip>
             <Menu
@@ -141,19 +168,51 @@ function ResponsiveAppBar({ inRegistration, setInRegistration, vociMenu, darkMod
               open={Boolean(anchorElUser)}
               onClose={handleCloseUserMenu}
             >
-              {settings.map((setting) => (
-                <MenuItem
-                  key={setting}
-                  onClick={() => {
-                    handleCloseUserMenu();
-                    if (setting === "Registrazione") {
-                      setInRegistration(true);
-                    }
-                  }}
-                >
-                  <Typography textAlign="center">{setting}</Typography>
-                </MenuItem>
-              ))}
+              {!isLogged
+                ? [
+                  <MenuItem
+                    key="login"
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      setCurrentPage("login");
+                    }}
+                  >
+                    <Typography textAlign="center">Login</Typography>
+                  </MenuItem>,
+                  <MenuItem
+                    key="register"
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      setCurrentPage("register");
+                    }}
+                  >
+                    <Typography textAlign="center">Registrazione</Typography>
+                  </MenuItem>,
+                ]
+                : [
+                  <MenuItem
+                    key="profile"
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      setCurrentPage("profile");
+                    }}
+                  >
+                    <Typography textAlign="center">Profilo</Typography>
+                  </MenuItem>,
+                  <MenuItem
+                    key="logout"
+                    onClick={() => {
+                      handleCloseUserMenu();
+                      setCurrentPage("home");
+                      setIsLogged(false);
+                      setUser({})
+                      // qui aggiungi anche il reset: setIsLogged(false), setUser({})
+                    }}
+                  >
+                    <Typography textAlign="center">Logout</Typography>
+                  </MenuItem>,
+                ]}
+
             </Menu>
           </Box>
         </Toolbar>
