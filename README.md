@@ -29,23 +29,27 @@ gestione dello stato e rendering dinamico in React.
 🚀 Come avviare il progetto
 
 # 1. Clona il repository
+```
 git clone https://github.com/LorenzoPa/calcio-app.git
-
+```
 # 2. Entra nella cartella del progetto
+```
 cd calcio-app
-
+```
 # 3. Installa le dipendenze
+```
 npm install
-
+```
 # 4. Avvia l’app in modalità sviluppo
+```
 npm run dev
-
+```
 # 5. Apri il browser su http://localhost:5173
 
 ---
 
 🔧 Struttura del progetto
-
+```
 calcio-app/
 ├── public/
 │   └── index.html
@@ -57,7 +61,7 @@ calcio-app/
 ├── package.json
 ├── vite.config.js
 └── README.md
-
+```
 ---
 
 🎯 Possibili sviluppi futuri
