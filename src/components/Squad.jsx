@@ -11,7 +11,7 @@ export default function Squad({ players, team, isLogged, setUser }) {
   const handleFavorite = async (team) => {
   const token = localStorage.getItem("access");
   try {
-    const res = await fetch("http://127.0.0.1:8000/auth/favorite/", {
+    const res = await fetch("http://127.0.0.1:8000/auth/favorite/team/", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
